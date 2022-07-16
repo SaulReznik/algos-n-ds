@@ -1,6 +1,6 @@
-function fib(prev1, prev2, num) {
-  if (num <= 2) return prev2;
-  return fib(prev2, prev1 + prev2, --num);
+function fib(n) {
+  if (n <= 2) return 1;
+  return fib(n - 1) + fib(n - 2);
 }
 
-console.log(fib(1, 1,))
+console.log(fib(8))
