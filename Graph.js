@@ -1,32 +1,4 @@
-class PriorityQueue {
-  constructor() {
-      this.values = [];
-  }
-
-  enqueue(val, priority) {
-      this.values.push({val, priority});
-      this.sort();
-  }
-  
-  dequeue() {
-      return this.values.shift();
-  }
-
-  sort() {
-      this.values.sort((a,b) => a.priority - b.priority);
-  }
-
-  generateInitialQueue(list, from) {
-      this.values = [];
-
-      for (let v in list) {
-          this.enqueue(v, v === from ? 0 : Infinity);
-      }
-      this.sort();
-  }
-}
-
-class WeightedGraph {
+class Graph {
   constructor() {
       this.adjacencyList = {};
   }
@@ -37,70 +9,100 @@ class WeightedGraph {
       }
   }
 
-  addEdge(vertex1, vertex2, weight) {
-      this.adjacencyList[vertex1].push({node: vertex2, weight});
-      this.adjacencyList[vertex2].push({node: vertex1, weight});
+  addEdge(vertex1, vertex2) {
+      this.adjacencyList[vertex1].push(vertex2);
+      this.adjacencyList[vertex2].push(vertex1);
   }
 
-  generateInitialDistances(from) {
-      const distances = {}
+  removeEdge(vertex1, vertex2) {
+      if (!this.adjacencyList[vertex1] || !this.adjacencyList[vertex2]) return;
 
-      for (let v in this.adjacencyList) {
-          distances[v] = v === from ? 0 : Infinity;
+      this.adjacencyList[vertex1] = this.adjacencyList[vertex1].filter(v => v !== vertex2)
+      this.adjacencyList[vertex2] = this.adjacencyList[vertex2].filter(v => v !== vertex1)
+  }
+
+  removeVertex(vertex) {
+      if (this.adjacencyList[vertex]) return;
+
+      delete this.adjacencyList[vertex];
+
+      for (let key in this.adjacencyList) {
+          this.adjacencyList[key] = this.adjacencyList[key].filter(v => v !== vertex);
       }
-  
-      return distances;
   }
 
-  generateInitialPrevious() {
-      const previous = {};
-
-      for (let v in this.adjacencyList) {
-          previous[v] = null;
-      }
-
-      return previous;
-  }
-
-  djikstra(from, to) {
-      const list = this.adjacencyList;
-      if(!list[from] || !list[to]) return null;
-
+  depthFirstRecursive(vertex) {
+      if (!this.adjacencyList[vertex]) return null;
       const result = [];
-      const distances = this.generateInitialDistances(from);
-      const previous = this.generateInitialPrevious();
-      const queue = new PriorityQueue();
-      queue.generateInitialQueue(list, from);
+      const visited = {};
 
-      while(queue.values.length) {
-          let vertex = queue.dequeue().val;
-          if (vertex === to) {
-              while(previous[vertex]) {
-                  result.push(vertex);
-                  vertex = previous[vertex]; 
-              }
-              break;
-          };
+      const traverse = (v) => {
+          if (!v) return null;
+          result.push(v);
+          visited[v] = true;
 
-          const neighbours = this.adjacencyList[vertex];
+          for (let i = 0; i < this.adjacencyList[v].length; i++) {
+              const item = this.adjacencyList[v][i];
 
-          neighbours.forEach(neighbour => {
-              const currDistance = distances[vertex] + neighbour.weight;
-              const currNode = neighbour.node;
-
-              if (currDistance < distances[currNode]) {
-                  distances[currNode] = currDistance;
-                  previous[currNode] = vertex;
-                  queue.enqueue(currNode, currDistance);
-              }
-          });
+              if (!visited[item]) traverse(item);
+          }
       }
 
-      return [from, ...result.reverse()];
+      traverse(vertex);
+      return result;
   }
-}
 
-const graph = new WeightedGraph();
+  depthFirstIterative(start) {
+      if (!this.adjacencyList[start]) return null;
+      const result = [];
+      const visited = {};
+      const stack = [start];
+
+      while(stack.length) {
+          const vertex = stack.pop();
+              result.push(vertex);
+              console.log('stack', stack);
+              this.adjacencyList[vertex].forEach(el => {
+                  if (!visited[el]) {
+                      visited[el] = true;
+                      stack.push(el);   
+                  }
+              });
+      }
+
+      return result;
+  }
+
+  breadthFirstTraverse(start) {
+      const result = [];
+      const queue = [start];
+      const visited = {};
+
+      while(queue.length) {
+          const vertex = queue.shift();
+          if (visited[vertex]) continue;
+          queue.push(...this.adjacencyList[vertex]);
+          visited[vertex] = true;
+          result.push(vertex);
+      }
+
+      return result;
+  }
+};
+
+const cities = new Graph();
+
+cities.addVertex('Tokyo');
+cities.addVertex('New York');
+cities.addVertex('Yerevan');
+
+cities.addEdge('Tokyo', 'Yerevan');
+cities.addEdge('Tokyo', 'New York');
+
+// cities.removeEdge('Tokyo', 'Yerevan');
+cities.removeVertex('Yerevan');
+
+const graph = new Graph();
 
 graph.addVertex('A');
 graph.addVertex('B');
@@ -109,13 +111,12 @@ graph.addVertex('D');
 graph.addVertex('E');
 graph.addVertex('F');
 
-graph.addEdge('A', 'B', 4);
-graph.addEdge('A', 'C', 2);
-graph.addEdge('B', 'E', 3);
-graph.addEdge('C', 'D', 2);
-graph.addEdge('C', 'F', 4);
-graph.addEdge('D', 'F', 1);
-graph.addEdge('D', 'E', 3);
-graph.addEdge('F', 'E', 1);
+graph.addEdge('A', 'B');
+graph.addEdge('A', 'C');
+graph.addEdge('B', 'D');
+graph.addEdge('C', 'E');
+graph.addEdge('D', 'E');
+graph.addEdge('D', 'F');
+graph.addEdge('E', 'F');
 
-console.log(graph.djikstra('A', 'E'));
+console.log(graph.breadthFirstTraverse('A'));
