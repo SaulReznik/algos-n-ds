@@ -21,12 +21,12 @@ class BinarySearchTree {
 
     insert(val) {
         const node = new Node(val)
-        if(!this.root) {
+        if (!this.root) {
             this.root = node;
             return this
         } else {
             let curr = this.root;
-            while(true) {
+            while (true) {
                 if (curr.value === node.value) return this;
                 if (node.value > curr.value) {
                     if (curr.right) {
@@ -45,13 +45,34 @@ class BinarySearchTree {
                 }
             }
         }
-        
+    }
+
+    insertRec(value, start = this.root) {
+        const node = new Node(value);
+        if (!this.root) {
+            this.root = node;
+            return;
+        }
+
+        if (start.value >= value) {
+            if (!start.left) {
+                start.left = node;
+                return;
+            }
+            this.insertRec(value, start.left);
+        } else if (start.value < value) {
+            if (!start.right) {
+                start.right = node;
+                return;
+            }
+            this.insertRec(value, start.right);
+        }
     }
 
     find(val) {
-        if(!this.root) return false;
+        if (!this.root) return false;
         let curr = this.root;
-        while(true) {
+        while (true) {
             if (curr.value === val) return true;
             if (val > curr.value) {
                 if (curr.right) {
@@ -72,7 +93,7 @@ class BinarySearchTree {
     BreadthFirstTraverse() {
         const queue = [this.root];
         const result = [];
-        while(queue.length) {
+        while (queue.length) {
             const target = queue.shift();
             result.push(target.value);
             if (target.left) queue.push(target.left);
