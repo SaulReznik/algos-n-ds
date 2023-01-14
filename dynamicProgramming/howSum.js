@@ -29,14 +29,12 @@ const howSumTable = (targetSum, coins) => {
   const table = Array(targetSum + 1).fill(null);
   table[0] = [];
 
-  for (let i = 0; i < table.length; i++) {
+  for (let i = 0; i <= targetSum; i++) {
     const combinations = table[i];
 
     if (combinations) {
       for (let coin of coins) {
-        if (i + coin <= targetSum) {
-          table[i + coin] = [...table[i], coin];
-        }
+        table[i + coin] = [...table[i], coin];
       }
     }
   }
