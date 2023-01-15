@@ -1,3 +1,6 @@
+// You are givven a target string and an array of words
+// You need to return a boolean value that says is it possible to construct the target string with the words from wordbank
+
 const canConstruct = (target, wordBank, memo = {}) => {
   if (memo.hasOwnProperty(target)) return memo[target];
   if (target === '') return true;
