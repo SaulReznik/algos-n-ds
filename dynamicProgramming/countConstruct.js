@@ -32,7 +32,7 @@ const countConstructTable = (target, wordBank) => {
 
   for (let i = 0; i < target.length + 1; i++) {
     if (table[i]) {
-      for (word of wordBank) {
+      for (let word of wordBank) {
         const suffix = target.slice(i);
         if (suffix.startsWith(word)) {
           table[i + word.length] += table[i];
