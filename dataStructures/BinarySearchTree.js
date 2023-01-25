@@ -47,6 +47,32 @@ class BinarySearchTree {
         }
     }
 
+    get(value, node = this.root) {
+        if (node.value === value) return node;
+        if (node.left) return this.get(value, node.left);
+        if (node.right) return this.get(value, node.right);
+    }
+
+    getParent(value, node = this.root) {
+        if (!node.left && !node.right) return null;
+
+        if (node.left) {
+            if (node.left.value === value) return node;
+            return this.getParent(value, node.left);
+        }
+
+        if (node.right) {
+            console.log(value, node);
+            if (node.right.value === value) return node;
+            return this.getParent(value, node.right)
+        }
+    }
+
+    remove(value) {
+        const node = this.getParent(value);
+        console.log(node);
+    }
+
     insertRec(value, start = this.root) {
         const node = new Node(value);
         if (!this.root) {
@@ -135,12 +161,13 @@ tree.insert(30);
 tree.insert(15);
 // console.log(tree);
 tree.insert(20);
-console.log(tree);
+// console.log(tree);
 
-console.log(tree.find(20));
-console.log(tree.find(15));
-console.log(tree.find(19));
-console.log(tree.BreadthFirstTraverse());
-console.log(tree.DepthFirstPreOrderTraverse());
-console.log(tree.DepthFirstPostOrderTraverse());
-console.log(tree.DepthFirstInOrderTraverse());
+console.log(tree.remove(20));
+// console.log(tree.find(20));
+// console.log(tree.find(15));
+// console.log(tree.find(19));
+// console.log(tree.BreadthFirstTraverse());
+// console.log(tree.DepthFirstPreOrderTraverse());
+// console.log(tree.DepthFirstPostOrderTraverse());
+// console.log(tree.DepthFirstInOrderTraverse());
