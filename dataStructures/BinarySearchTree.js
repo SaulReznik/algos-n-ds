@@ -128,24 +128,10 @@ class BinarySearchTree {
         return result;
     }
 
-    DepthFirstPreOrderTraverse() {
+    DepthFirstTraverse(order) {
         const result = [];
 
-        traverse(this.root, result, 'PRE_ORDER');
-        return result;
-    }
-
-    DepthFirstPostOrderTraverse() {
-        const result = [];
-
-        traverse(this.root, result, 'POST_ORDER');
-        return result;
-    }
-
-    DepthFirstInOrderTraverse() {
-        const result = [];
-
-        traverse(this.root, result, 'IN_ORDER');
+        traverse(this.root, result, order);
         return result;
     }
 }
@@ -163,11 +149,11 @@ tree.insert(15);
 tree.insert(20);
 // console.log(tree);
 
-console.log(tree.remove(20));
+// console.log(tree.remove(20));
 // console.log(tree.find(20));
 // console.log(tree.find(15));
 // console.log(tree.find(19));
 // console.log(tree.BreadthFirstTraverse());
-// console.log(tree.DepthFirstPreOrderTraverse());
-// console.log(tree.DepthFirstPostOrderTraverse());
-// console.log(tree.DepthFirstInOrderTraverse());
+console.log(tree.DepthFirstTraverse('PRE_ORDER'));
+console.log(tree.DepthFirstTraverse('IN_ORDER'));
+console.log(tree.DepthFirstTraverse('POST_ORDER'));
