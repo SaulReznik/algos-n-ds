@@ -6,6 +6,11 @@ function traverse(node, result = [], type = 'PRE_ORDER') {
     if (type === 'POST_ORDER') result.push(node.value);
 }
 
+function getSum(root) {
+    if (!root) return 0;
+    return root.value + getSum(root.left) + getSum(root.right);
+}
+
 class Node {
     constructor(value) {
         this.value = value;
@@ -134,6 +139,24 @@ class BinarySearchTree {
         traverse(this.root, result, order);
         return result;
     }
+
+    getSumRecursive() {
+        return getSum(this.root);
+    }
+
+    getSumIterative() {
+        let sum = 0;
+        const queue = [this.root];
+
+        while (queue.length) {
+            const node = queue.shift();
+            sum += node.value;
+            if (node.left) queue.push(node.left);
+            if (node.right) queue.push(node.right);
+        }
+
+        return sum;
+    }
 }
 
 const tree = new BinarySearchTree();
@@ -157,3 +180,5 @@ tree.insert(20);
 console.log(tree.DepthFirstTraverse('PRE_ORDER'));
 console.log(tree.DepthFirstTraverse('IN_ORDER'));
 console.log(tree.DepthFirstTraverse('POST_ORDER'));
+console.log(tree.getSumRecursive());
+console.log(tree.getSumIterative());
