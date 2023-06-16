@@ -11,6 +11,25 @@ function getSum(root) {
     return root.value + getSum(root.left) + getSum(root.right);
 }
 
+function getMinValue(root) {
+    if (!root) return Infinity;
+
+    // With math min
+    // return Math.min(root.value, getMinValue(root.left), getMinValue(root.right))
+
+    // Without Math min
+    let smallest = Infinity;
+    let nums = [root.value, getMinValue(root.left), getMinValue(root.right)];
+
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] < smallest) {
+            smallest = nums[i];
+        }
+    };
+
+    return smallest;
+};
+
 class Node {
     constructor(value) {
         this.value = value;
@@ -141,6 +160,7 @@ class BinarySearchTree {
     }
 
     getSumRecursive() {
+        // TODO: insert here
         return getSum(this.root);
     }
 
@@ -156,6 +176,25 @@ class BinarySearchTree {
         }
 
         return sum;
+    }
+
+    getMinValue() {
+        // TODO: insert here
+        return getMinValue(this.root);
+    }
+
+    getMinValueIterative() {
+        let smallest = this.root.value;
+        const queue = [this.root];
+
+        while (queue.length) {
+            const node = queue.shift();
+            if (node.value < smallest) smallest = node.value;
+            if (node.left) queue.push(node.left);
+            if (node.right) queue.push(node.right);
+        }
+
+        return smallest;
     }
 }
 
@@ -177,8 +216,10 @@ tree.insert(20);
 // console.log(tree.find(15));
 // console.log(tree.find(19));
 // console.log(tree.BreadthFirstTraverse());
-console.log(tree.DepthFirstTraverse('PRE_ORDER'));
-console.log(tree.DepthFirstTraverse('IN_ORDER'));
-console.log(tree.DepthFirstTraverse('POST_ORDER'));
-console.log(tree.getSumRecursive());
-console.log(tree.getSumIterative());
+// console.log(tree.DepthFirstTraverse('PRE_ORDER'));
+// console.log(tree.DepthFirstTraverse('IN_ORDER'));
+// console.log(tree.DepthFirstTraverse('POST_ORDER'));
+// console.log(tree.getSumRecursive());
+// console.log(tree.getSumIterative());
+// console.log(tree.getMinValueIterative());
+console.log(getMinValue(tree.root));
