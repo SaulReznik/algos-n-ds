@@ -1,13 +1,20 @@
 #!/bin/bash
+
+# Directories
 ds="dataStructures"
 dp="dynamicProgramming"
+
+# Data Structures
+staticArray="StaticArray"
+bst="BinarySearchTree"
+
+# Dynamic Programming
+f="fib"
 
 eval "direction=\$$1"
 
 cd ./$direction
 
-bst="BinarySearchTree"
-f="fib"
 
 eval "file_name=\$$2"
 
