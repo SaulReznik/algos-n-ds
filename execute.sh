@@ -7,6 +7,7 @@ dp="dynamicProgramming"
 # Data Structures
 staticArray="StaticArray"
 bst="BinarySearchTree"
+bh="BinaryHeap"
 
 # Dynamic Programming
 f="fib"
