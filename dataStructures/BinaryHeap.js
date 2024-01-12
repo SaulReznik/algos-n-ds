@@ -1,62 +1,54 @@
 class BinaryHeap {
     constructor() {
-        this.values = [];
+        this.values = [0];
     }
 
     insert(value) {
         this.values.push(value);
         let index = this.values.length - 1;
-        let parentIndex = Math.floor((index - 1) / 2);
-    
-        while (this.values[index] > this.values[parentIndex]) {
+        let parentIndex = Math.floor(index / 2);
+
+        while (this.values[index] > this.values[parentIndex] && index > 1) {
             if (!index) break;
             let temp = this.values[index];
             this.values[index] = this.values[parentIndex];
             this.values[parentIndex] = temp;
             index = parentIndex;
-            parentIndex = Math.floor((index - 1) / 2);
+            parentIndex = Math.floor(index / 2);
         };
-    
-        console.log(this.values); 
+
+        console.log(this.values.join());
     }
 
     extractMax() {
-        let temp = this.values[0];
-        this.values[0] = this.values[this.values.length - 1];
+        if (this.values.length < 2) return -1;
+        // swaping before excrating so the time complexity for this operation will be O(1);
+        let temp = this.values[1];
+        this.values[1] = this.values[this.values.length - 1];
         this.values[this.values.length - 1] = temp;
         const max = this.values.pop();
 
-        let index = 0;
+        let currIndex = 1;
+
         while (true) {
-            const element = this.values[index];
-            let leftChildIndex = 2 * (index + 1);
-            let rightChildIndex = 2 * (index + 2);
-            let leftChild;
-            let rightChild;
+            let leftChildIndex = 2 * currIndex;
+            let rightChildIndex = 2 * currIndex + 1;
             let swap = null;
 
-            if (leftChildIndex < this.values.length) {
-                leftChild = this.values[leftChildIndex];
-                if (leftChild > this.values[index]) {
-                    swap = leftChildIndex;
-                }
+            if (rightChildIndex < this.values.length && this.values[rightChildIndex] > this.values[currIndex] && this.values[rightChildIndex] > this.values[leftChildIndex]) {
+                swap = rightChildIndex;
+            } else if (leftChildIndex < this.values.length && this.values[leftChildIndex] > this.values[currIndex]) {
+                swap = leftChildIndex;
             }
 
-            if (rightChildIndex < this.values.length) {
-                rightChild = this.values[rightChildIndex];
-                if (
-                    (!swap && rightChild > this.values[index]) 
-                    || (swap && rightChild > leftChild)
-                ) {
-                    swap = rightChildIndex;
-                }
-            }
-            
             if (!swap) break;
-            this.values[index] = this.values[swap];
-            this.values[swap] = element;
-            index = swap;
+            temp = this.values[currIndex];
+            this.values[currIndex] = this.values[swap];
+            this.values[swap] = temp;
+            currIndex = swap;
         }
+        console.log(this.values.join());
+        return max;
     }
 }
 
@@ -69,7 +61,14 @@ heap.insert(4);
 heap.insert(5);
 heap.insert(6);
 heap.insert(7);
-
-heap.extractMax();
+console.log('--------');
+console.log(heap.extractMax());
+console.log(heap.extractMax());
+console.log(heap.extractMax());
+console.log(heap.extractMax());
+console.log(heap.extractMax());
+console.log(heap.extractMax());
+console.log(heap.extractMax());
+console.log(heap.extractMax());
 
 console.log(heap.values);
