@@ -47,10 +47,12 @@ class BinaryHeap {
             this.values[swap] = temp;
             currIndex = swap;
         }
-        console.log(this.values.join());
+
         return max;
     }
 }
+
+
 
 const heap = new BinaryHeap();
 
@@ -61,7 +63,7 @@ heap.insert(4);
 heap.insert(5);
 heap.insert(6);
 heap.insert(7);
-console.log('--------');
+
 console.log(heap.extractMax());
 console.log(heap.extractMax());
 console.log(heap.extractMax());
