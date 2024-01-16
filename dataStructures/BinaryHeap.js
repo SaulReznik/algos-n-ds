@@ -1,3 +1,25 @@
+const sinkDown = (index, heap) => {
+    let currIndex = index;
+
+    while (true) {
+        let leftChildIndex = 2 * currIndex;
+        let rightChildIndex = 2 * currIndex + 1;
+        let swap = null;
+
+        if (rightChildIndex < heap.length && heap[rightChildIndex] > heap[currIndex] && heap[rightChildIndex] > heap[leftChildIndex]) {
+            swap = rightChildIndex;
+        } else if (leftChildIndex < heap.length && heap[leftChildIndex] > heap[currIndex]) {
+            swap = leftChildIndex;
+        }
+
+        if (!swap) break;
+        temp = heap[currIndex];
+        heap[currIndex] = heap[swap];
+        heap[swap] = temp;
+        currIndex = swap;
+    }
+};
+
 class BinaryHeap {
     constructor() {
         this.values = [0];
@@ -28,25 +50,7 @@ class BinaryHeap {
         this.values[this.values.length - 1] = temp;
         const max = this.values.pop();
 
-        let currIndex = 1;
-
-        while (true) {
-            let leftChildIndex = 2 * currIndex;
-            let rightChildIndex = 2 * currIndex + 1;
-            let swap = null;
-
-            if (rightChildIndex < this.values.length && this.values[rightChildIndex] > this.values[currIndex] && this.values[rightChildIndex] > this.values[leftChildIndex]) {
-                swap = rightChildIndex;
-            } else if (leftChildIndex < this.values.length && this.values[leftChildIndex] > this.values[currIndex]) {
-                swap = leftChildIndex;
-            }
-
-            if (!swap) break;
-            temp = this.values[currIndex];
-            this.values[currIndex] = this.values[swap];
-            this.values[swap] = temp;
-            currIndex = swap;
-        }
+        sinkDown(1, this.values);
 
         return max;
     }
