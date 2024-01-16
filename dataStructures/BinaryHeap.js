@@ -42,6 +42,19 @@ class BinaryHeap {
         console.log(this.values.join());
     }
 
+    heapify(arr) {
+        this.values = [0, ...arr];
+        // Half of the elements are already "on the bottom" so we don't need to sink them down
+        let index = Math.floor(this.values.length / 2);
+
+        while (index > 0) {
+            sinkDown(index, this.values);
+            index--;
+        };
+
+        console.log(this.values.join());
+    }
+
     extractMax() {
         if (this.values.length < 2) return -1;
         // swaping before excrating so the time complexity for this operation will be O(1);
@@ -60,14 +73,15 @@ class BinaryHeap {
 
 const heap = new BinaryHeap();
 
-heap.insert(1);
-heap.insert(2);
-heap.insert(3);
-heap.insert(4);
-heap.insert(5);
-heap.insert(6);
-heap.insert(7);
+// heap.insert(1);
+// heap.insert(2);
+// heap.insert(3);
+// heap.insert(4);
+// heap.insert(5);
+// heap.insert(6);
+// heap.insert(7);
 
+heap.heapify([4, 1, 3, 6, 2, 5, 7]);
 console.log(heap.extractMax());
 console.log(heap.extractMax());
 console.log(heap.extractMax());
@@ -76,5 +90,3 @@ console.log(heap.extractMax());
 console.log(heap.extractMax());
 console.log(heap.extractMax());
 console.log(heap.extractMax());
-
-console.log(heap.values);
