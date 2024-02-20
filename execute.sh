@@ -3,6 +3,7 @@
 # Directories
 ds="dataStructures"
 dp="dynamicProgramming"
+bt="backtracking"
 
 # Data Structures
 staticArray="StaticArray"
@@ -11,6 +12,9 @@ bh="BinaryHeap"
 
 # Dynamic Programming
 f="fib"
+
+# Backtracking
+guw="getUniqueWays"
 
 eval "direction=\$$1"
 
