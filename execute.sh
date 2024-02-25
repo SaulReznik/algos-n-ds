@@ -3,7 +3,7 @@
 # Directories
 ds="dataStructures"
 dp="dynamicProgramming"
-bt="backtracking"
+matrix="matrix"
 
 # Data Structures
 staticArray="StaticArray"
@@ -13,8 +13,9 @@ bh="BinaryHeap"
 # Dynamic Programming
 f="fib"
 
-# Backtracking
-guw="getUniqueWays"
+# Matrix
+dfs="dfs"
+bfs="bfs"
 
 eval "direction=\$$1"
 
