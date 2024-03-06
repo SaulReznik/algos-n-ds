@@ -103,6 +103,33 @@ class Graph {
 
         return count;
     }
+
+    shortestRoadLength(start, end) {
+        const queue = [start];
+        const visits = { start: true };
+
+        let length = 0;
+
+        while (queue.length) {
+            const queueLength = queue.length;
+
+            for (let i = 0; i < queueLength; i++) {
+                const [node] = queue.pop();             // If we are going breath first, then it doesn't matter from where we are starting to iterate in single breath
+                if (node === end) return length;
+                visits[node] = true;
+
+                for (let j = 0; j < this.adjacencyList[node].length; j++) {
+                    const neighbour = this.adjacencyList[node][j];
+                    if (visits.hasOwnProperty(neighbour)) continue;
+                    queue.push(neighbour);
+                }
+
+                length++;
+            }
+        }
+
+        return length;
+    }
 };
 
 const cities = new Graph();
@@ -125,6 +152,8 @@ graph.addVertex('C');
 graph.addVertex('D');
 graph.addVertex('E');
 graph.addVertex('F');
+graph.addVertex('G');
+graph.addVertex('H');
 
 graph.addEdge('A', 'B');
 graph.addEdge('A', 'C');
@@ -133,5 +162,8 @@ graph.addEdge('C', 'E');
 graph.addEdge('D', 'E');
 graph.addEdge('D', 'F');
 graph.addEdge('E', 'F');
+graph.addEdge('F', 'G');
+graph.addEdge('G', 'H');
+graph.addEdge('E', 'G');
 
-console.log(graph.allPossibleRoads('A', 'F'));
+console.log(graph.shortestRoadLength('A', 'H'));
