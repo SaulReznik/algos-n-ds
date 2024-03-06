@@ -1,93 +1,108 @@
 class Graph {
-  constructor() {
-      this.adjacencyList = {};
-  }
+    constructor() {
+        this.adjacencyList = {};
+    }
 
-  addVertex(value) {
-      if (!this.adjacencyList[value]) {
-          this.adjacencyList[value] = [];
-      }
-  }
+    addVertex(value) {
+        if (!this.adjacencyList[value]) {
+            this.adjacencyList[value] = [];
+        }
+    }
 
-  addEdge(vertex1, vertex2) {
-      this.adjacencyList[vertex1].push(vertex2);
-      this.adjacencyList[vertex2].push(vertex1);
-  }
+    addEdge(vertex1, vertex2) {
+        this.adjacencyList[vertex1].push(vertex2);
+        this.adjacencyList[vertex2].push(vertex1);
+    }
 
-  removeEdge(vertex1, vertex2) {
-      if (!this.adjacencyList[vertex1] || !this.adjacencyList[vertex2]) return;
+    removeEdge(vertex1, vertex2) {
+        if (!this.adjacencyList[vertex1] || !this.adjacencyList[vertex2]) return;
 
-      this.adjacencyList[vertex1] = this.adjacencyList[vertex1].filter(v => v !== vertex2)
-      this.adjacencyList[vertex2] = this.adjacencyList[vertex2].filter(v => v !== vertex1)
-  }
+        this.adjacencyList[vertex1] = this.adjacencyList[vertex1].filter(v => v !== vertex2)
+        this.adjacencyList[vertex2] = this.adjacencyList[vertex2].filter(v => v !== vertex1)
+    }
 
-  removeVertex(vertex) {
-      if (this.adjacencyList[vertex]) return;
+    removeVertex(vertex) {
+        if (this.adjacencyList[vertex]) return;
 
-      delete this.adjacencyList[vertex];
+        delete this.adjacencyList[vertex];
 
-      for (let key in this.adjacencyList) {
-          this.adjacencyList[key] = this.adjacencyList[key].filter(v => v !== vertex);
-      }
-  }
+        for (let key in this.adjacencyList) {
+            this.adjacencyList[key] = this.adjacencyList[key].filter(v => v !== vertex);
+        }
+    }
 
-  depthFirstRecursive(vertex) {
-      if (!this.adjacencyList[vertex]) return null;
-      const result = [];
-      const visited = {};
+    depthFirstRecursive(vertex) {
+        if (!this.adjacencyList[vertex]) return null;
+        const result = [];
+        const visited = {};
 
-      const traverse = (v) => {
-          if (!v) return null;
-          result.push(v);
-          visited[v] = true;
+        const traverse = (v) => {
+            if (!v) return null;
+            result.push(v);
+            visited[v] = true;
 
-          for (let i = 0; i < this.adjacencyList[v].length; i++) {
-              const item = this.adjacencyList[v][i];
+            for (let i = 0; i < this.adjacencyList[v].length; i++) {
+                const item = this.adjacencyList[v][i];
 
-              if (!visited[item]) traverse(item);
-          }
-      }
+                if (!visited[item]) traverse(item);
+            }
+        }
 
-      traverse(vertex);
-      return result;
-  }
+        traverse(vertex);
+        return result;
+    }
 
-  depthFirstIterative(start) {
-      if (!this.adjacencyList[start]) return null;
-      const result = [];
-      const visited = {};
-      const stack = [start];
+    depthFirstIterative(start) {
+        if (!this.adjacencyList[start]) return null;
+        const result = [];
+        const visited = {};
+        const stack = [start];
 
-      while(stack.length) {
-          const vertex = stack.pop();
-              result.push(vertex);
-              console.log('stack', stack);
-              this.adjacencyList[vertex].forEach(el => {
-                  if (!visited[el]) {
-                      visited[el] = true;
-                      stack.push(el);   
-                  }
-              });
-      }
+        while (stack.length) {
+            const vertex = stack.pop();
+            result.push(vertex);
+            console.log('stack', stack);
+            this.adjacencyList[vertex].forEach(el => {
+                if (!visited[el]) {
+                    visited[el] = true;
+                    stack.push(el);
+                }
+            });
+        }
 
-      return result;
-  }
+        return result;
+    }
 
-  breadthFirstTraverse(start) {
-      const result = [];
-      const queue = [start];
-      const visited = {};
+    breadthFirstTraverse(start) {
+        const result = [];
+        const queue = [start];
+        const visited = {};
 
-      while(queue.length) {
-          const vertex = queue.shift();
-          if (visited[vertex]) continue;
-          queue.push(...this.adjacencyList[vertex]);
-          visited[vertex] = true;
-          result.push(vertex);
-      }
+        while (queue.length) {
+            const vertex = queue.shift();
+            if (visited[vertex]) continue;
+            queue.push(...this.adjacencyList[vertex]);
+            visited[vertex] = true;
+            result.push(vertex);
+        }
 
-      return result;
-  }
+        return result;
+    }
+
+    allPossibleRoads(node, end, visits = {}) {
+        if (visits.hasOwnProperty(node)) return 0;
+        if (node === end) return 1;
+        let count = 0;
+
+        visits[node] = true;
+        for (let i = 0; i < this.adjacencyList[node].length; i++) {
+            const neighbour = this.adjacencyList[node][i];
+            count += this.allPossibleRoads(neighbour, end, visits);
+        };
+        delete visits[node];
+
+        return count;
+    }
 };
 
 const cities = new Graph();
@@ -119,4 +134,4 @@ graph.addEdge('D', 'E');
 graph.addEdge('D', 'F');
 graph.addEdge('E', 'F');
 
-console.log(graph.breadthFirstTraverse('A'));
+console.log(graph.allPossibleRoads('A', 'F'));
