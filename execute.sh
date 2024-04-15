@@ -9,7 +9,8 @@ matrix="matrix"
 staticArray="StaticArray"
 bst="BinarySearchTree"
 bh="BinaryHeap"
-g="graph"
+graph="graph"
+trie="Trie"
 
 # Dynamic Programming
 f="fib"
