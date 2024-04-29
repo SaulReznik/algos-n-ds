@@ -11,6 +11,7 @@ bst="BinarySearchTree"
 bh="BinaryHeap"
 graph="graph"
 trie="Trie"
+segmentTree="SegmentTree"
 
 # Dynamic Programming
 f="fib"
