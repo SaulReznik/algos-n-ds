@@ -176,6 +176,21 @@ class BinarySearchTree {
         }
     }
 
+    iterativePreorderDFS() {
+        let curr = this.root;
+        const stack = [];
+
+        while (curr || stack.length) {
+            if (curr) {
+                console.log(curr.value);
+                stack.push(curr.right);
+                curr = curr.left;
+            } else {
+                curr = stack.pop();
+            }
+        }
+    }
+
     getSumRecursive() {
         // TODO: insert here
         return getSum(this.root);
@@ -239,4 +254,4 @@ tree.insert(20);
 // console.log(tree.getSumRecursive());
 // console.log(tree.getSumIterative());
 // console.log(tree.getMinValueIterative());
-tree.iterativeInorderDFS();
+tree.iterativePreorderDFS();
