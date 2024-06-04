@@ -119,6 +119,7 @@ class BinarySearchTree {
         }
     }
 
+
     find(val) {
         if (!this.root) return false;
         let curr = this.root;
@@ -157,6 +158,22 @@ class BinarySearchTree {
 
         traverse(this.root, result, order);
         return result;
+    }
+
+    iterativeInorderDFS() {
+        let curr = this.root;
+        const stack = [];
+
+        while (curr || stack.length) {
+            if (curr) {
+                stack.push(curr);
+                curr = curr.left;
+            } else {
+                curr = stack.pop();
+                console.log(curr.value);
+                curr = curr.right;
+            }
+        }
     }
 
     getSumRecursive() {
@@ -222,4 +239,4 @@ tree.insert(20);
 // console.log(tree.getSumRecursive());
 // console.log(tree.getSumIterative());
 // console.log(tree.getMinValueIterative());
-console.log(getMinValue(tree.root));
+tree.iterativeInorderDFS();
