@@ -13,7 +13,7 @@ const sinkDown = (index, heap) => {
         }
 
         if (!swap) break;
-        temp = heap[currIndex];
+        const temp = heap[currIndex];
         heap[currIndex] = heap[swap];
         heap[swap] = temp;
         currIndex = swap;
@@ -67,21 +67,27 @@ class BinaryHeap {
 
         return max;
     }
+
+    isEmpty() {
+        return this.values.length <= 1;
+    }
+
+    getSize() {
+        return this.values.length - 1;
+    }
 }
-
-
 
 const heap = new BinaryHeap();
 
-// heap.insert(1);
-// heap.insert(2);
-// heap.insert(3);
-// heap.insert(4);
-// heap.insert(5);
-// heap.insert(6);
-// heap.insert(7);
+heap.insert(1);
+heap.insert(2);
+heap.insert(3);
+heap.insert(4);
+heap.insert(5);
+heap.insert(6);
+heap.insert(7);
 
-heap.heapify([4, 1, 3, 6, 2, 5, 7]);
+// heap.heapify([4, 1, 3, 6, 2, 5, 7]);
 console.log(heap.extractMax());
 console.log(heap.extractMax());
 console.log(heap.extractMax());
@@ -90,3 +96,7 @@ console.log(heap.extractMax());
 console.log(heap.extractMax());
 console.log(heap.extractMax());
 console.log(heap.extractMax());
+console.log(heap);
+
+exports.default = BinaryHeap;
+

@@ -12,6 +12,7 @@ bh="BinaryHeap"
 graph="graph"
 trie="Trie"
 segmentTree="SegmentTree"
+medianFinder="MedianFinder"
 
 # Dynamic Programming
 f="fib"
