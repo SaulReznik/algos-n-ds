@@ -4,6 +4,7 @@
 ds="dataStructures"
 dp="dynamicProgramming"
 matrix="matrix"
+backtracking="backtracking"
 
 # Data Structures
 staticArray="StaticArray"
@@ -20,6 +21,9 @@ f="fib"
 # Matrix
 dfs="dfs"
 bfs="bfs"
+
+# Backtracking
+subsets="subsets"
 
 eval "direction=\$$1"
 
