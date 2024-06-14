@@ -24,6 +24,7 @@ bfs="bfs"
 
 # Backtracking
 subsets="subsets"
+comb="combinations"
 
 eval "direction=\$$1"
 
