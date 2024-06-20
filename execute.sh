@@ -5,6 +5,7 @@ ds="dataStructures"
 dp="dynamicProgramming"
 matrix="matrix"
 backtracking="backtracking"
+graph="graph"
 
 # Data Structures
 staticArray="StaticArray"
@@ -26,6 +27,10 @@ bfs="bfs"
 subsets="subsets"
 comb="combinations"
 perms="permutations"
+
+# Graph
+edgesToAdj="edgesToAdjacencyList"
+dijkstra="dijkstra"
 
 eval "direction=\$$1"
 
