@@ -37,7 +37,7 @@ const edges = [
 ]
 
 // single directional, weighted
-const edgesToAjacencyList = (edges) => {
+const edgesToAjacencyList = edges => {
   const adjacencyList = {};
 
   edges.forEach(({ from, to, weight }) => {
@@ -55,9 +55,31 @@ const edgesToAjacencyList = (edges) => {
   return adjacencyList;
 };
 
+// birectional directional, weighted
+const bidirectionalEdgesToAdjacencyList = edges => {
+  const adjacencyList = {};
+
+  edges.forEach(({ from, to, weight }) => {
+    if (!adjacencyList.hasOwnProperty(to)) {
+      adjacencyList[to] = [[from, weight]];
+    } else {
+      adjacencyList[to].push([from, weight])
+    }
+
+    if (!adjacencyList.hasOwnProperty(from)) {
+      adjacencyList[from] = [[to, weight]];
+    } else {
+      adjacencyList[from].push([to, weight])
+    }
+  });
+
+  return adjacencyList;
+}
+
 // console.log(edgesToAjacencyList(edges));
 
 module.exports = {
+  bidirectionalEdgesToAdjacencyList,
   edgesToAjacencyList,
   edges
 }

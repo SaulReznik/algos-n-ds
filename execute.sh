@@ -31,6 +31,7 @@ perms="permutations"
 # Graph
 edgesToAdj="edgesToAdjacencyList"
 dijkstra="dijkstra"
+prims="prims"
 
 eval "direction=\$$1"
 
