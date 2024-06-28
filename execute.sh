@@ -32,6 +32,7 @@ perms="permutations"
 edgesToAdj="edgesToAdjacencyList"
 dijkstra="dijkstra"
 prims="prims"
+topSort="topSort"
 
 eval "direction=\$$1"
 
