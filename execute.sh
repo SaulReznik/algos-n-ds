@@ -18,6 +18,7 @@ medianFinder="MedianFinder"
 
 # Dynamic Programming
 f="fib"
+knapsack="knapsack"
 
 # Matrix
 dfs="dfs"
