@@ -9,7 +9,7 @@ const recursiveKnapsack = (profits, weights, capacity) => {
         let newCapacity = capacity - weights[i];
 
         if (newCapacity >= 0) {
-            let currProfit = profits[i] + helper(i, profits, weights, newCapacity);
+            let currProfit = profits[i] + helper(i + 1, profits, weights, newCapacity);
             maxProfit = Math.max(maxProfit, currProfit);
         };
 
@@ -37,7 +37,7 @@ const memoizedRecursiveKnapsack = (profits, weights, capacity) => {
         let newCapacity = capacity - weights[i];
 
         if (newCapacity >= 0) {
-            let currProfit = profits[i] + helper(i, profits, weights, newCapacity);
+            let currProfit = profits[i] + helper(i + 1, profits, weights, newCapacity);
             memo[i][capacity] = Math.max(memo[i][capacity], currProfit);
         };
 
