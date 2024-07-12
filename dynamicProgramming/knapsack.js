@@ -19,7 +19,7 @@ const recursiveKnapsack = (profits, weights, capacity) => {
     return helper(0, profits, weights, capacity);
 };
 
-console.log(recursiveKnapsack(profits, weights, 80));
+// console.log(recursiveKnapsack(profits, weights, 80));
 
 
 const memoizedRecursiveKnapsack = (profits, weights, capacity) => {
@@ -49,4 +49,67 @@ const memoizedRecursiveKnapsack = (profits, weights, capacity) => {
     return result;
 }
 
-console.log(memoizedRecursiveKnapsack(profits, weights, 800));
+// console.log(memoizedRecursiveKnapsack(profits, weights, 800));
+
+const tabulation = (profits, weights, capacity) => {
+    const table = [];
+
+    for (let i = 0; i < profits.length; i++) {
+        table.push(new Array(capacity + 1).fill(0));
+    };
+
+    for (let i = 0; i <= capacity; i++) {
+        if (weights[0] <= i) {
+            table[0][i] = profits[0]
+        }
+    }
+
+    for (let i = 1; i < table.length; i++) {
+        for (let j = 0; j <= capacity; j++) {
+            const skipCell = table[i - 1][j];
+            if (weights[i] <= j) {
+                const includeCell = table[i - 1][j - weights[i]];
+                table[i][j] = Math.max(skipCell, includeCell + profits[i]);
+            } else {
+                table[i][j] = skipCell
+            }
+        }
+    };
+
+    console.table(table);
+    return table[profits.length - 1][capacity];
+};
+
+console.log(tabulation(profits, weights, 8));
+
+const optimizedTabulation = (profits, weights, capacity) => {
+    const table = [];
+    table.push(new Array(capacity + 1).fill(0));
+
+    for (let i = 0; i <= capacity; i++) {
+        if (weights[0] <= i) {
+            table[0][i] = profits[0];
+        }
+    };
+
+    for (let i = 1; i < profits.length; i++) {
+        const newRow = [];
+
+        for (let j = 0; j <= capacity; j++) {
+            const skipCell = table[0][j];
+            if (weights[i] <= j) {
+                const includeCell = table[0][j - weights[i]];
+                newRow.push(Math.max(skipCell, includeCell + profits[i]));
+            } else {
+                newRow.push(skipCell);
+            }
+        }
+
+        table[0] = newRow;
+    }
+
+    console.table(table);
+    return table[0][capacity];
+}
+
+console.log(optimizedTabulation(profits, weights, 8));
