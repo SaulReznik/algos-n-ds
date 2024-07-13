@@ -20,7 +20,7 @@ const recursive = (profits, weights, capacity) => {
   return helper(0, profits, weights, capacity);
 }
 
-console.log(recursive(profits, weights, 8));
+// console.log(recursive(profits, weights, 8));
 
 const memoizedRecursive = (profits, weights, capacity) => {
   const memo = [];
@@ -47,4 +47,67 @@ const memoizedRecursive = (profits, weights, capacity) => {
   return helper(0, profits, weights, capacity);
 }
 
-console.log(memoizedRecursive(profits, weights, 8));
+// console.log(memoizedRecursive(profits, weights, 8));
+
+const tabulation = (profits, weights, capacity) => {
+  const table = [];
+
+  for (let i = 0; i < profits.length; i++) {
+    table.push(new Array(capacity + 1).fill(0))
+  };
+
+  for (let i = 0; i <= capacity; i++) {
+    if (weights[0] <= i) {
+      table[0][i] = profits[0]
+    }
+  }
+
+
+  for (let i = 1; i < table.length; i++) {
+    for (let j = 0; j <= capacity; j++) {
+      const skipProfit = table[i - 1][j];
+
+      if (weights[i] <= j) {
+        const includeProfit = table[i][j - weights[i]] + profits[i];
+        table[i][j] = Math.max(skipProfit, includeProfit);
+      } else {
+        table[i][j] = skipProfit;
+      }
+    }
+  }
+
+  console.table(table);
+  return table[profits.length - 1][capacity];
+}
+
+// console.log(tabulation(profits, weights, 8));
+
+const optimizedTabulation = (profits, weights, capacity) => {
+  let table = [];
+
+  for (let i = 0; i <= capacity; i++) {
+    if (weights[0] <= i) {
+      table.push(profits[0]);
+    } else {
+      table.push(0)
+    }
+  };
+
+  for (let i = 1; i < profits.length; i++) {
+    const newRow = [];
+    for (let j = 0; j <= capacity; j++) {
+      const skipProfit = table[j];
+      if (weights[i] <= j) {
+        const includeProfit = newRow[j - weights[i]] + profits[i];
+        newRow[j] = Math.max(skipProfit, includeProfit);
+      } else {
+        newRow.push(skipProfit);
+      }
+    }
+    table = newRow;
+  };
+  console.table(table);
+  return table[capacity];
+};
+
+console.log(optimizedTabulation(profits, weights, 8));
