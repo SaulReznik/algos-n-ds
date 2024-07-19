@@ -23,6 +23,7 @@ f="fib"
 knapsack="knapsack"
 unboundedKnapsack="unboundedKnapsack"
 lcs="longestCommonSubstring"
+palindromes="palindromes"
 
 # Matrix
 dfs="dfs"
