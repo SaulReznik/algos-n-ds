@@ -7,6 +7,8 @@ matrix="matrix"
 backtracking="backtracking"
 graph="graph"
 
+# -------------------------------
+
 # Data Structures
 staticArray="StaticArray"
 bst="BinarySearchTree"
@@ -20,6 +22,7 @@ medianFinder="MedianFinder"
 f="fib"
 knapsack="knapsack"
 unboundedKnapsack="unboundedKnapsack"
+lcs="longestCommonSubstring"
 
 # Matrix
 dfs="dfs"
@@ -35,6 +38,8 @@ edgesToAdj="edgesToAdjacencyList"
 dijkstra="dijkstra"
 prims="prims"
 topSort="topSort"
+
+# --------------------------
 
 eval "direction=\$$1"
 
