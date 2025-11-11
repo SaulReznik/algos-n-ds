@@ -14,6 +14,7 @@ const helper = (i, combinations, curr, n, k) => {
   helper(i + 1, combinations, curr, n, k);
 }
 
+// n choose k
 const optimizedHelper = (i, combinations, curr, n, k) => {
   if (curr.length === k) {
     combinations.push([...curr]);

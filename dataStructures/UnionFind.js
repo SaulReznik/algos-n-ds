@@ -36,3 +36,25 @@ class UnionFind {
     }
   }
 }
+
+class UnionFindUnoptimaized {
+  constructor(size) {
+    this.parent = Array.from({length: size}, (_, i) => i);
+  }
+
+  find(x) {
+    while (this.parent[x] !== x) x = this.parent[x];
+    return x;
+  }
+
+  union(x, y) {
+    const parentY = this.find(y);
+    const parentX = this.find(x);
+
+    if (parentY === parentX) return false;
+
+    this.parent[this.find(y)] = this.find(x);
+
+    return true;
+  }
+}
